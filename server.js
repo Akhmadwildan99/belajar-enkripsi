@@ -4,7 +4,7 @@ const session = require('express-session');
 const flash = require('express-flash');
 const port = 3000;
 
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: true }))
 // Kedua, setting session handler
 app.use(session({
     secret: 'Buat ini jadi rahasia',
@@ -12,7 +12,7 @@ app.use(session({
     saveUninitialized: false
 }))
 
-const passport = require('./node_modules/passport')
+const passport = require('./lib/passport')
 app.use(passport.initialize())
 app.use(passport.session())
 // Keempat, setting flash

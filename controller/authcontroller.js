@@ -1,5 +1,5 @@
 const { User } = require('../models' )
-const passport = require('../node_modules/passport' )
+const passport = require('../lib/passport' )
 module.exports = {
 register : (req, res, next) => {
  // Kita panggil static method register yang sudah kita buat tadi
@@ -8,8 +8,13 @@ register : (req, res, next) => {
      password: req.body.password
  })
  .then(() => {
- res.redirect ('/register' )
+ res.redirect ('/login' )
  })
  .catch(err => next(err))
-}
+},
+login: passport.authenticate('local', {
+   successRedirect: '/',
+   failureRedirect: '/login',
+   failureRedirect: true 
+})
 }

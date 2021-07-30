@@ -24,6 +24,21 @@ module.exports = (sequelize, DataTypes) => {
       return this.create({ username, password : encryptedPassword })
       
     }
+    checkPassword = password => bcrypt.compareSync(password, this.password)
+    /* Method Authenticate, untuk login */
+    static authenticate = async ({username, password}) => {
+      try {
+        const user = await this.findOne({where: {username}})
+        if(!user) return Promise.reject('User not found')
+        const isPasswordValid = user.checkPassword(password)
+        if(!isPasswordValid) return Promise.reject('wrong password')
+        return Promise.resolve(user) 
+        
+      } catch(err) {
+        return Promise.reject(err)
+
+      }
+    }
   };
   User.init({
     username: DataTypes.STRING,
