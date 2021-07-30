@@ -12,9 +12,8 @@ register : (req, res, next) => {
  })
  .catch(err => next(err))
 },
-login: passport.authenticate('local', {
-   successRedirect: '/',
-   failureRedirect: '/login',
-   failureRedirect: true 
-})
+whoami : (req, res) => {
+    /* req.user adalah instance dari User Model, hasil autentikasi dari passport. */
+    res.render('profile', req.user.dataValues)
+}
 }
